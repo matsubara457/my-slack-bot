@@ -8,8 +8,11 @@ import {
 } from "chat";
 import { createSlackAdapter } from "@chat-adapter/slack";
 import { createRedisState } from "@chat-adapter/state-redis";
+import { createMemoryState } from "@chat-adapter/state-memory";
 import { generateText } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
+import { google } from "@ai-sdk/google";
+
+const useMemory = !process.env.REDIS_URL;
 
 let _bot: Chat | null = null;
 
@@ -20,7 +23,7 @@ export function getBot(): Chat {
       adapters: {
         slack: createSlackAdapter(),
       },
-      state: createRedisState(),
+      state: useMemory ? createMemoryState() : createRedisState(),
     });
 
     _bot.onNewMention(async (thread) => {
@@ -47,7 +50,7 @@ export function getBot(): Chat {
       await thread.startTyping();
 
       const { text } = await generateText({
-        model: anthropic("claude-sonnet-4-5-20250514"),
+        model: google("gemini-2.0-flash"),
         system:
           "You are a helpful assistant in a Slack workspace. Answer concisely in the same language the user writes in.",
         prompt: message.text,
@@ -67,7 +70,7 @@ export function getBot(): Chat {
         [
           `Platform: ${event.thread.adapter.name}`,
           `Built with: Chat SDK + AI SDK + Next.js`,
-          `Model: Claude Sonnet`,
+          `Model: Gemini 2.0 Flash (free)`,
         ].join("\n")
       );
     });

@@ -8,10 +8,13 @@ importers:
 
   .:
     dependencies:
-      '@ai-sdk/anthropic':
-        specifier: ^3.0.53
-        version: 3.0.53(zod@4.3.6)
+      '@ai-sdk/google':
+        specifier: ^3.0.36
+        version: 3.0.36(zod@4.3.6)
       '@chat-adapter/slack':
+        specifier: ^4.15.0
+        version: 4.15.0
+      '@chat-adapter/state-memory':
         specifier: ^4.15.0
         version: 4.15.0
       '@chat-adapter/state-redis':
@@ -54,14 +57,14 @@ importers:
 
 packages:
 
-  '@ai-sdk/anthropic@3.0.53':
-    resolution: {integrity: sha512-HVuVLUt4VtioGKV5gxRg7Wu2g0BvX3zzrAa51OHPG9sJlP+caPyZu3n4j4FHjZmg++8A9JHDCMWBQfHra3gtWg==}
+  '@ai-sdk/gateway@3.0.61':
+    resolution: {integrity: sha512-OT6SeORuOoqfABhntMJHmInblxE2DbBYvRTynVOGl6dCDDh0cNU1lJgknyDV698eQmfb6Um/94/rImgt0ZPjDA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/gateway@3.0.61':
-    resolution: {integrity: sha512-OT6SeORuOoqfABhntMJHmInblxE2DbBYvRTynVOGl6dCDDh0cNU1lJgknyDV698eQmfb6Um/94/rImgt0ZPjDA==}
+  '@ai-sdk/google@3.0.36':
+    resolution: {integrity: sha512-Bex79zKP9dxCTjKMR+uiS3EUNd7I812zdsFGAV+FD38Oa6S8savFn1PoIEhSH/x+bxWDfp2dR5IuZP51bePUpQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -148,6 +151,9 @@ packages:
 
   '@chat-adapter/slack@4.15.0':
     resolution: {integrity: sha512-DE2puxMXitt2AVLBvMAldZ4KKUKpKWxSd62nWLDX6xXtOo6z9uXAggZD3FnMOGITqw+oQypdFopvm/Wu6OxeFg==}
+
+  '@chat-adapter/state-memory@4.15.0':
+    resolution: {integrity: sha512-I/p6dA8fl8peZH9utKOsO8raFttUSyIQwyhB/uP6cR9d07hZVcG/SF30t4RjKDgegnq8+euqPFj3lCssIaYhoA==}
 
   '@chat-adapter/state-redis@4.15.0':
     resolution: {integrity: sha512-156CGZCkMXzsnMC20nIpNkAGScbasOHxR9YcPMuLm2IwSC1L/Kyea7o9TEv2ldvk63q/e+AaU+98T7T5/2+mvg==}
@@ -2134,17 +2140,17 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/anthropic@3.0.53(zod@4.3.6)':
-    dependencies:
-      '@ai-sdk/provider': 3.0.8
-      '@ai-sdk/provider-utils': 4.0.17(zod@4.3.6)
-      zod: 4.3.6
-
   '@ai-sdk/gateway@3.0.61(zod@4.3.6)':
     dependencies:
       '@ai-sdk/provider': 3.0.8
       '@ai-sdk/provider-utils': 4.0.17(zod@4.3.6)
       '@vercel/oidc': 3.1.0
+      zod: 4.3.6
+
+  '@ai-sdk/google@3.0.36(zod@4.3.6)':
+    dependencies:
+      '@ai-sdk/provider': 3.0.8
+      '@ai-sdk/provider-utils': 4.0.17(zod@4.3.6)
       zod: 4.3.6
 
   '@ai-sdk/provider-utils@4.0.17(zod@4.3.6)':
@@ -2271,6 +2277,12 @@ snapshots:
       chat: 4.15.0
     transitivePeerDependencies:
       - debug
+      - supports-color
+
+  '@chat-adapter/state-memory@4.15.0':
+    dependencies:
+      chat: 4.15.0
+    transitivePeerDependencies:
       - supports-color
 
   '@chat-adapter/state-redis@4.15.0':

@@ -2,22 +2,25 @@
 
 AI-powered Slack bot built with [Chat SDK](https://chat-sdk.dev/), Next.js, and [AI SDK](https://sdk.vercel.ai/).
 
+**All free** — uses Google Gemini (free tier), in-memory state, and Vercel Hobby plan.
+
 ## Features
 
-- **AI Chat** — Responds to messages using Claude via AI SDK
+- **AI Chat** — Responds to messages using Gemini 2.0 Flash via AI SDK
 - **Interactive UI** — Cards with buttons rendered natively in Slack
 - **Thread Subscriptions** — Multi-turn conversations with context
 - **Serverless** — Deploys to Vercel with zero infrastructure
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js (App Router) |
-| Bot SDK | [Chat SDK](https://chat-sdk.dev/) (`chat` + `@chat-adapter/slack`) |
-| AI | [AI SDK](https://sdk.vercel.ai/) + Anthropic Claude |
-| State | Redis (`@chat-adapter/state-redis`) |
-| Deploy | Vercel |
+| Layer | Technology | Cost |
+|---|---|---|
+| Framework | Next.js (App Router) | Free |
+| Bot SDK | [Chat SDK](https://chat-sdk.dev/) | Free |
+| AI | [AI SDK](https://sdk.vercel.ai/) + Google Gemini 2.0 Flash | Free |
+| State | In-memory (dev) / Redis via Upstash (prod) | Free |
+| Tunnel | ngrok | Free |
+| Deploy | Vercel Hobby | Free |
 
 ## Getting Started
 
@@ -25,8 +28,6 @@ AI-powered Slack bot built with [Chat SDK](https://chat-sdk.dev/), Next.js, and 
 
 - Node.js 18+
 - pnpm
-- Redis instance
-- Slack workspace (admin access)
 
 ### 1. Install dependencies
 
@@ -41,7 +42,13 @@ pnpm install
 3. Paste the manifest from `slack-app-manifest.yml`
 4. Install to your workspace
 
-### 3. Configure environment variables
+### 3. Get a Google AI API Key (free)
+
+1. Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+2. Click **Create API Key**
+3. Copy the key
+
+### 4. Configure environment variables
 
 ```bash
 cp .env.example .env.local
@@ -51,16 +58,17 @@ Fill in:
 
 - `SLACK_BOT_TOKEN` — Bot User OAuth Token (`xoxb-...`)
 - `SLACK_SIGNING_SECRET` — App Signing Secret
-- `REDIS_URL` — Redis connection string
-- `ANTHROPIC_API_KEY` — Anthropic API key
+- `GOOGLE_GENERATIVE_AI_API_KEY` — Google AI API key
 
-### 4. Run locally
+Redis is optional — if `REDIS_URL` is not set, in-memory state is used automatically.
+
+### 5. Run locally
 
 ```bash
 pnpm dev
 ```
 
-### 5. Expose with a tunnel
+### 6. Expose with a tunnel
 
 ```bash
 ngrok http 3000
@@ -68,19 +76,11 @@ ngrok http 3000
 
 Update the Slack Event Subscriptions URL to `https://<your-tunnel>.ngrok.io/api/webhooks/slack`.
 
-### 6. Test
+### 7. Test
 
-1. Invite the bot to a channel: `/invite @mybot`
+1. Invite the bot to a channel: `/invite @My Bot`
 2. @mention the bot — it replies with an interactive card
 3. Reply in the thread — AI generates a response
-
-## Deploy to Vercel
-
-```bash
-vercel deploy
-```
-
-Set environment variables in the Vercel dashboard and update the Slack webhook URL to your production domain.
 
 ## Project Structure
 
@@ -102,3 +102,4 @@ my-slack-bot/
 - [Chat SDK Documentation](https://chat-sdk.dev/docs)
 - [Slack Bot Guide](https://chat-sdk.dev/docs/guides/slack-nextjs)
 - [AI SDK Documentation](https://sdk.vercel.ai/)
+- [Google AI Studio](https://aistudio.google.com/)
